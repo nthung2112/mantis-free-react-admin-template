@@ -1,8 +1,79 @@
+import { PaletteMode } from '@mui/material/styles';
+
+interface ColorRange {
+  [key: number]: string;
+  A50?: string;
+  A100?: string;
+  A200?: string;
+  A300?: string;
+  A400?: string;
+  A700?: string;
+  A800?: string;
+}
+
+interface Colors {
+  blue: string[];
+  red: string[];
+  gold: string[];
+  cyan: string[];
+  green: string[];
+  grey: string[];
+}
+
+interface GreyColors {
+  0: string;
+  50: string;
+  100: string;
+  200: string;
+  300: string;
+  400: string;
+  500: string;
+  600: string;
+  700: string;
+  800: string;
+  900: string;
+  A50: string;
+  A100: string;
+  A200: string;
+  A400: string;
+  A700: string;
+  A800: string;
+}
+
+interface ColorConfig {
+  lighter: string;
+  100?: string;
+  200?: string;
+  light: string;
+  400?: string;
+  main: string;
+  dark: string;
+  700?: string;
+  600?: string;
+  800?: string;
+  darker: string;
+  900?: string;
+  A100?: string;
+  A200?: string;
+  A300?: string;
+  contrastText: string;
+}
+
+interface ThemeColors {
+  primary: ColorConfig;
+  secondary: ColorConfig;
+  error: Omit<ColorConfig, '100' | '200' | '400' | '600' | '700' | '800' | '900' | 'A100' | 'A200' | 'A300'>;
+  warning: Omit<ColorConfig, '100' | '200' | '400' | '600' | '700' | '800' | '900' | 'A100' | 'A200' | 'A300'>;
+  info: Omit<ColorConfig, '100' | '200' | '400' | '600' | '700' | '800' | '900' | 'A100' | 'A200' | 'A300'>;
+  success: Omit<ColorConfig, '100' | '200' | '400' | '600' | '700' | '800' | '900' | 'A100' | 'A200' | 'A300'>;
+  grey: GreyColors;
+}
+
 // ==============================|| PRESET THEME - DEFAULT ||============================== //
 
-export default function Default(colors) {
+export default function Default(colors: Colors, presetColor: string, mode: PaletteMode): ThemeColors {
   const { blue, red, gold, cyan, green, grey } = colors;
-  const greyColors = {
+  const greyColors: GreyColors = {
     0: grey[0],
     50: grey[1],
     100: grey[2],

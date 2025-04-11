@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-// material-ui
+import { SxProps } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -12,10 +11,32 @@ import MainCard from 'components/MainCard';
 // assets
 import RiseOutlined from '@ant-design/icons/RiseOutlined';
 import FallOutlined from '@ant-design/icons/FallOutlined';
+import { JSX } from 'react';
 
-const iconSX = { fontSize: '0.75rem', color: 'inherit', marginLeft: 0, marginRight: 0 };
+interface AnalyticEcommerceProps {
+  color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
+  title: string;
+  count: string;
+  percentage?: number;
+  isLoss?: boolean;
+  extra: string;
+}
 
-export default function AnalyticEcommerce({ color = 'primary', title, count, percentage, isLoss, extra }) {
+const iconSX: SxProps = {
+  fontSize: '0.75rem',
+  color: 'inherit',
+  marginLeft: 0,
+  marginRight: 0
+};
+
+export default function AnalyticEcommerce({
+  color = 'primary',
+  title,
+  count,
+  percentage,
+  isLoss,
+  extra
+}: AnalyticEcommerceProps): JSX.Element {
   return (
     <MainCard contentSX={{ p: 2.25 }}>
       <Stack sx={{ gap: 0.5 }}>
@@ -31,7 +52,7 @@ export default function AnalyticEcommerce({ color = 'primary', title, count, per
           {percentage && (
             <Grid>
               <Chip
-                variant="combined"
+                variant="outlined"
                 color={color}
                 icon={isLoss ? <FallOutlined style={iconSX} /> : <RiseOutlined style={iconSX} />}
                 label={`${percentage}%`}
@@ -54,12 +75,3 @@ export default function AnalyticEcommerce({ color = 'primary', title, count, per
     </MainCard>
   );
 }
-
-AnalyticEcommerce.propTypes = {
-  color: PropTypes.string,
-  title: PropTypes.string,
-  count: PropTypes.string,
-  percentage: PropTypes.number,
-  isLoss: PropTypes.bool,
-  extra: PropTypes.string
-};

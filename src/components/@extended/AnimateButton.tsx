@@ -1,11 +1,29 @@
-import PropTypes from 'prop-types';
-
-// third-party
+import { ReactNode } from 'react';
 import { motion, useCycle } from 'framer-motion';
 
-export default function AnimateButton({ children, type = 'scale', direction = 'right', offset = 10, scale = { hover: 1.05, tap: 0.954 } }) {
-  let offset1;
-  let offset2;
+interface ScaleProps {
+  hover: number;
+  tap: number;
+}
+
+interface AnimateButtonProps {
+  children: ReactNode;
+  type?: 'slide' | 'scale' | 'rotate';
+  direction?: 'up' | 'down' | 'left' | 'right';
+  offset?: number;
+  scale?: number | ScaleProps;
+}
+
+const AnimateButton = ({
+  children,
+  type = 'scale',
+  direction = 'right',
+  offset = 10,
+  scale = { hover: 1.05, tap: 0.954 }
+}: AnimateButtonProps) => {
+  let offset1: number;
+  let offset2: number;
+
   switch (direction) {
     case 'up':
     case 'left':
@@ -54,24 +72,21 @@ export default function AnimateButton({ children, type = 'scale', direction = 'r
 
     case 'scale':
     default:
+      let scaleValues: ScaleProps;
       if (typeof scale === 'number') {
-        scale = {
+        scaleValues = {
           hover: scale,
           tap: scale
         };
+      } else {
+        scaleValues = scale as ScaleProps;
       }
       return (
-        <motion.div whileHover={{ scale: scale?.hover }} whileTap={{ scale: scale?.tap }}>
+        <motion.div whileHover={{ scale: scaleValues.hover }} whileTap={{ scale: scaleValues.tap }}>
           {children}
         </motion.div>
       );
   }
-}
-
-AnimateButton.propTypes = {
-  children: PropTypes.node,
-  type: PropTypes.oneOf(['slide', 'scale', 'rotate']),
-  direction: PropTypes.oneOf(['up', 'down', 'left', 'right']),
-  offset: PropTypes.number,
-  scale: PropTypes.object
 };
+
+export default AnimateButton;

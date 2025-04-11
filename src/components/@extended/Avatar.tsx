@@ -1,13 +1,30 @@
-import PropTypes from 'prop-types';
-
-// material-ui
-import { styled } from '@mui/material/styles';
+import { ReactNode } from 'react';
+import { styled, Theme } from '@mui/material/styles';
 import MuiAvatar from '@mui/material/Avatar';
 
 // project imports
 import getColors from 'utils/getColors';
 
-function getColorStyle({ theme, color, type }) {
+// types
+type AvatarSize = 'badge' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type AvatarType = 'filled' | 'outlined' | 'combined' | 'light';
+type ColorType = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success';
+
+interface StyleProps {
+  theme: Theme;
+  color: ColorType | string;
+  type?: AvatarType;
+}
+
+interface SizeStyleProps {
+  fontSize: string;
+  width: number;
+  height: number;
+  border?: string;
+}
+
+// color style function
+function getColorStyle({ theme, color, type }: StyleProps) {
   const colors = getColors(theme, color);
   const { lighter, light, main, contrastText } = colors;
 
@@ -41,7 +58,7 @@ function getColorStyle({ theme, color, type }) {
 
 // ==============================|| AVATAR - SIZE STYLE ||============================== //
 
-function getSizeStyle(size) {
+function getSizeStyle(size: AvatarSize): SizeStyleProps {
   switch (size) {
     case 'badge':
       return {
@@ -84,35 +101,37 @@ function getSizeStyle(size) {
   }
 }
 
-const AvatarStyle = styled(MuiAvatar, { shouldForwardProp: (prop) => prop !== 'color' && prop !== 'type' && prop !== 'size' })(
-  ({ theme, size, color, type }) => ({
-    ...getSizeStyle(size),
-    ...getColorStyle({ theme, color, type }),
-    variants: [
-      {
-        props: { size: 'badge' },
-        style: {
-          borderColor: theme.palette.background.default
-        }
-      }
-    ]
-  })
-);
+interface AvatarStyleProps {
+  color?: ColorType | string;
+  type?: AvatarType;
+  size?: AvatarSize;
+}
 
-export default function Avatar({ children, color = 'primary', type, size = 'md', ...others }) {
+const AvatarStyle = styled(MuiAvatar, {
+  shouldForwardProp: (prop) => prop !== 'color' && prop !== 'type' && prop !== 'size'
+})<AvatarStyleProps>(({ theme, size, color, type }) => ({
+  ...getSizeStyle(size || 'md'),
+  ...getColorStyle({ theme, color: color || 'primary', type }),
+  ...(size === 'badge' && {
+    borderColor: theme.palette.background.default
+  })
+}));
+
+// ==============================|| AVATAR - EXTENDED ||============================== //
+
+interface AvatarProps extends Omit<React.ComponentProps<typeof MuiAvatar>, 'color'> {
+  children?: ReactNode;
+  color?: ColorType | string;
+  type?: AvatarType;
+  size?: AvatarSize;
+}
+
+const Avatar = ({ children, color = 'primary', type, size = 'md', ...others }: AvatarProps) => {
   return (
     <AvatarStyle color={color} type={type} size={size} {...others}>
       {children}
     </AvatarStyle>
   );
-}
-
-getColorStyle.propTypes = { theme: PropTypes.any, color: PropTypes.any, type: PropTypes.any };
-
-Avatar.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  color: PropTypes.string,
-  type: PropTypes.any,
-  size: PropTypes.string,
-  others: PropTypes.any
 };
+
+export default Avatar;

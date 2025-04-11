@@ -1,6 +1,22 @@
+import { Theme } from '@mui/material/styles';
+
+export type ShadowType =
+  | 'primary'
+  | 'secondary'
+  | 'error'
+  | 'warning'
+  | 'info'
+  | 'success'
+  | 'primaryButton'
+  | 'secondaryButton'
+  | 'errorButton'
+  | 'warningButton'
+  | 'infoButton'
+  | 'successButton';
+
 // ==============================|| CUSTOM FUNCTION - COLOR SHADOWS ||============================== //
 
-export default function getShadow(theme, shadow) {
+export default function getShadow(theme: Theme, shadow: ShadowType | string): string {
   switch (shadow) {
     case 'secondary':
       return theme.customShadows.secondary;

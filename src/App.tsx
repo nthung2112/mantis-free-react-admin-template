@@ -1,14 +1,14 @@
+import { FC } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
 // project imports
 import router from 'routes';
 import ThemeCustomization from 'themes';
-
 import ScrollTop from 'components/ScrollTop';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
-export default function App() {
+const App: FC = () => {
   return (
     <ThemeCustomization>
       <ScrollTop>
@@ -16,4 +16,6 @@ export default function App() {
       </ScrollTop>
     </ThemeCustomization>
   );
-}
+};
+
+export default App;

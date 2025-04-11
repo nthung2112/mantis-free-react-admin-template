@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, CSSProperties, ElementType } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
@@ -12,13 +11,14 @@ import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 // project imports
 import MainCard from 'components/MainCard';
 import navigation from 'menu-items';
+import { MenuItem, BreadcrumbsProps, CustomLink, MenuType } from 'types/menu';
 
 // assets
-import ApartmentOutlined from '@ant-design/icons/ApartmentOutlined';
-import HomeOutlined from '@ant-design/icons/HomeOutlined';
-import HomeFilled from '@ant-design/icons/HomeFilled';
+import { ApartmentOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
+import { HomeFilled } from '@ant-design/icons';
 
-export default function Breadcrumbs({
+const Breadcrumbs = ({
   card = false,
   custom = false,
   divider = false,
@@ -33,14 +33,14 @@ export default function Breadcrumbs({
   titleBottom = true,
   sx,
   ...others
-}) {
+}: BreadcrumbsProps) => {
   const theme = useTheme();
   const location = useLocation();
 
-  const [main, setMain] = useState();
-  const [item, setItem] = useState();
+  const [main, setMain] = useState<MenuItem>();
+  const [item, setItem] = useState<MenuItem>();
 
-  const iconSX = {
+  const iconSX: CSSProperties = {
     marginRight: theme.spacing(0.75),
     marginLeft: 0,
     width: '1rem',
@@ -56,30 +56,29 @@ export default function Breadcrumbs({
   }
 
   useEffect(() => {
-    navigation?.items?.map((menu) => {
-      if (menu.type && menu.type === 'group') {
-        if (menu?.url && menu.url === customLocation) {
-          setMain(menu);
-          setItem(menu);
+    navigation?.items?.forEach((menuItem: any) => {
+      if (menuItem.type === 'group') {
+        if (menuItem?.url && menuItem.url === customLocation) {
+          setMain(menuItem);
+          setItem(menuItem);
         } else {
-          getCollapse(menu);
+          getCollapse(menuItem);
         }
       }
-      return false;
     });
   });
 
   // set active item state
-  const getCollapse = (menu) => {
+  const getCollapse = (menu: MenuItem) => {
     if (!custom && menu.children) {
       menu.children.filter((collapse) => {
-        if (collapse.type && collapse.type === 'collapse') {
+        if (collapse.type === 'collapse') {
           getCollapse(collapse);
           if (collapse.url === customLocation) {
             setMain(collapse);
             setItem(collapse);
           }
-        } else if (collapse.type && collapse.type === 'item') {
+        } else if (collapse.type === 'item') {
           if (customLocation === collapse.url) {
             setMain(menu);
             setItem(collapse);
@@ -91,8 +90,8 @@ export default function Breadcrumbs({
   };
 
   // item separator
-  const SeparatorIcon = separator;
-  const separatorIcon = separator ? <SeparatorIcon style={{ fontSize: '0.75rem', marginTop: 2 }} /> : '/';
+  const SeparatorIcon = separator as ElementType | undefined;
+  const separatorIcon = SeparatorIcon ? <SeparatorIcon style={{ fontSize: '0.75rem', marginTop: 2 }} /> : '/';
 
   let mainContent;
   let itemContent;
@@ -156,7 +155,7 @@ export default function Breadcrumbs({
 
   // items
   if ((item && item.type === 'item') || (item?.type === 'group' && item?.url) || custom) {
-    itemTitle = item?.title;
+    itemTitle = item?.title || '';
 
     ItemIcon = item?.icon ? item.icon : ApartmentOutlined;
     itemContent = (
@@ -181,7 +180,7 @@ export default function Breadcrumbs({
     if (custom && links && links?.length > 0) {
       tempContent = (
         <MuiBreadcrumbs aria-label="breadcrumb" maxItems={maxItems || 8} separator={separatorIcon}>
-          {links?.map((link, index) => {
+          {links?.map((link: CustomLink, index: number) => {
             CollapseIcon = link.icon ? link.icon : ApartmentOutlined;
 
             return (
@@ -237,21 +236,6 @@ export default function Breadcrumbs({
   }
 
   return breadcrumbContent;
-}
-
-Breadcrumbs.propTypes = {
-  card: PropTypes.bool,
-  custom: PropTypes.bool,
-  divider: PropTypes.bool,
-  heading: PropTypes.string,
-  icon: PropTypes.bool,
-  icons: PropTypes.bool,
-  links: PropTypes.array,
-  maxItems: PropTypes.number,
-  rightAlign: PropTypes.bool,
-  separator: PropTypes.any,
-  title: PropTypes.bool,
-  titleBottom: PropTypes.bool,
-  sx: PropTypes.any,
-  others: PropTypes.any
 };
+
+export default Breadcrumbs;

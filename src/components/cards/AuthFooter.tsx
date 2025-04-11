@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 
 // ==============================|| FOOTER - AUTHENTICATION ||============================== //
 
-export default function AuthFooter() {
+function AuthFooter() {
   return (
     <Container maxWidth="xl">
       <Stack
@@ -46,3 +46,5 @@ export default function AuthFooter() {
     </Container>
   );
 }
+
+export default AuthFooter;
