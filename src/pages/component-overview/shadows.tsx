@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -8,9 +7,39 @@ import Typography from '@mui/material/Typography';
 // project imports
 import MainCard from 'components/MainCard';
 
+// types
+interface CustomTheme extends Theme {
+  customShadows: {
+    z1: string;
+    primaryButton: string;
+    secondaryButton: string;
+    successButton: string;
+    warningButton: string;
+    infoButton: string;
+    errorButton: string;
+    primary: string;
+    secondary: string;
+    success: string;
+    warning: string;
+    info: string;
+    error: string;
+  };
+}
+
+interface ShadowBoxProps {
+  shadow: string;
+}
+
+interface CustomShadowBoxProps {
+  shadow: string;
+  label: string;
+  color?: string;
+  bgcolor?: string;
+}
+
 // ===============================|| SHADOW BOX ||=============================== //
 
-function ShadowBox({ shadow }) {
+const ShadowBox: React.FC<ShadowBoxProps> = ({ shadow }) => {
   return (
     <MainCard border={false} shadow={shadow} boxShadow>
       <Stack sx={{ gap: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -19,11 +48,11 @@ function ShadowBox({ shadow }) {
       </Stack>
     </MainCard>
   );
-}
+};
 
 // ===============================|| CUSTOM - SHADOW BOX ||=============================== //
 
-function CustomShadowBox({ shadow, label, color, bgcolor }) {
+const CustomShadowBox: React.FC<CustomShadowBoxProps> = ({ shadow, label, color, bgcolor }) => {
   return (
     <MainCard border={false} shadow={shadow} boxShadow sx={{ bgcolor: bgcolor || 'inherit' }}>
       <Stack sx={{ gap: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -33,93 +62,23 @@ function CustomShadowBox({ shadow, label, color, bgcolor }) {
       </Stack>
     </MainCard>
   );
-}
+};
 
 // ============================|| COMPONENT - SHADOW ||============================ //
 
-export default function ComponentShadow() {
-  const theme = useTheme();
+const ComponentShadow: React.FC = () => {
+  const theme = useTheme() as CustomTheme;
 
   return (
     <Grid container spacing={3}>
       <Grid size={12}>
         <MainCard title="Basic Shadow">
           <Grid container spacing={3}>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="0" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="1" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="2" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="3" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="4" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="5" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="6" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="7" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="8" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="9" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="10" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="11" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="12" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="13" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="14" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="15" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="16" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="17" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="18" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="19" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="20" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="21" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="22" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="23" />
-            </Grid>
-            <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
-              <ShadowBox shadow="24" />
-            </Grid>
+            {Array.from({ length: 25 }, (_, index) => (
+              <Grid key={index} size={{ xs: 6, sm: 4, md: 3, lg: 2 }}>
+                <ShadowBox shadow={index.toString()} />
+              </Grid>
+            ))}
           </Grid>
         </MainCard>
       </Grid>
@@ -206,8 +165,6 @@ export default function ComponentShadow() {
       </Grid>
     </Grid>
   );
-}
+};
 
-ShadowBox.propTypes = { shadow: PropTypes.string };
-
-CustomShadowBox.propTypes = { shadow: PropTypes.string, label: PropTypes.string, color: PropTypes.string, bgcolor: PropTypes.string };
+export default ComponentShadow;

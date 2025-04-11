@@ -1,16 +1,36 @@
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 
 import { chartsGridClasses, LineChart } from '@mui/x-charts';
 
-const data = [58, 115, 28, 83, 63, 75, 35];
-const labels = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const data: number[] = [58, 115, 28, 83, 63, 75, 35];
+const labels: string[] = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+interface ChartSeries {
+  data: number[];
+  showMark: boolean;
+  id: string;
+  color: string;
+  label: string;
+  type?: 'line';
+}
 
 // ==============================|| REPORT AREA CHART ||============================== //
 
-export default function ReportAreaChart() {
+const ReportAreaChart: React.FC = () => {
   const theme = useTheme();
   const axisFonstyle = { fill: theme.palette.text.secondary };
+
+  const chartSeries: ChartSeries[] = [
+    {
+      data,
+      showMark: false,
+      id: 'ReportAreaChart',
+      color: theme.palette.warning.main,
+      label: 'Series 1',
+      type: 'line'
+    }
+  ];
 
   return (
     <LineChart
@@ -18,19 +38,13 @@ export default function ReportAreaChart() {
       xAxis={[{ data: labels, scaleType: 'point', disableLine: true, disableTicks: true, tickLabelStyle: axisFonstyle }]}
       yAxis={[{ tickMaxStep: 10 }]}
       leftAxis={null}
-      series={[
-        {
-          data,
-          showMark: false,
-          id: 'ReportAreaChart',
-          color: theme.palette.warning.main,
-          label: 'Series 1'
-        }
-      ]}
+      series={chartSeries}
       slotProps={{ legend: { hidden: true } }}
       height={340}
       margin={{ top: 30, bottom: 50, left: 20, right: 20 }}
       sx={{ '& .MuiLineElement-root': { strokeWidth: 1 }, [`& .${chartsGridClasses.line}`]: { strokeDasharray: '5 3' } }}
     />
   );
-}
+};
+
+export default ReportAreaChart;

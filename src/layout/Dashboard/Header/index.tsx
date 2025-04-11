@@ -1,8 +1,10 @@
+import React from 'react';
 import { useMemo } from 'react';
 
 // material-ui
+import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import AppBar from '@mui/material/AppBar';
+import AppBar, { AppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 
 // project imports
@@ -17,13 +19,18 @@ import { DRAWER_WIDTH, MINI_DRAWER_WIDTH } from 'config';
 import MenuFoldOutlined from '@ant-design/icons/MenuFoldOutlined';
 import MenuUnfoldOutlined from '@ant-design/icons/MenuUnfoldOutlined';
 
+// types
+interface MenuMaster {
+  isDashboardDrawerOpened: boolean;
+}
+
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
-export default function Header() {
-  const downLG = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+const Header = (): React.ReactElement => {
+  const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   const { menuMaster } = useGetMenuMaster();
-  const drawerOpen = menuMaster.isDashboardDrawerOpened;
+  const drawerOpen = menuMaster?.isDashboardDrawerOpened || false;
 
   // header content
   const headerContent = useMemo(() => <HeaderContent />, []);
@@ -37,7 +44,7 @@ export default function Header() {
         edge="start"
         color="secondary"
         variant="light"
-        sx={(theme) => ({
+        sx={(theme: Theme) => ({
           color: 'text.primary',
           bgcolor: drawerOpen ? 'transparent' : 'grey.100',
           ...theme.applyStyles('dark', { bgcolor: drawerOpen ? 'transparent' : 'background.default' }),
@@ -51,7 +58,7 @@ export default function Header() {
   );
 
   // app-bar params
-  const appBar = {
+  const appBar: AppBarProps = {
     position: 'fixed',
     color: 'inherit',
     elevation: 0,
@@ -74,4 +81,6 @@ export default function Header() {
       )}
     </>
   );
-}
+};
+
+export default Header;

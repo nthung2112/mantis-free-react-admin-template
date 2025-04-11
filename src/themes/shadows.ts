@@ -1,13 +1,33 @@
 // material-ui
-import { alpha } from '@mui/material/styles';
+import { Theme, alpha } from '@mui/material/styles';
+
+// types
+interface CustomShadowType {
+  button: string;
+  text: string;
+  z1: string;
+  primary: string;
+  secondary: string;
+  error: string;
+  warning: string;
+  info: string;
+  success: string;
+  grey: string;
+  primaryButton: string;
+  secondaryButton: string;
+  errorButton: string;
+  warningButton: string;
+  infoButton: string;
+  successButton: string;
+  greyButton: string;
+}
 
 // ==============================|| DEFAULT THEME - CUSTOM SHADOWS ||============================== //
 
-export default function CustomShadows(theme) {
+const CustomShadows = (theme: Theme): CustomShadowType => {
   return {
-    // z1: `0px 2px 8px rgba(0, 0, 0, 0.15)`,
-    button: `0 2px #0000000b`,
-    text: `0 -1px 0 rgb(0 0 0 / 12%)`,
+    button: '0 2px #0000000b',
+    text: '0 -1px 0 rgb(0 0 0 / 12%)',
     z1: `0px 1px 4px ${alpha(theme.palette.grey[900], 0.08)}`,
     primary: `0 0 0 2px ${alpha(theme.palette.primary.main, 0.2)}`,
     secondary: `0 0 0 2px ${alpha(theme.palette.secondary.main, 0.2)}`,
@@ -24,4 +44,6 @@ export default function CustomShadows(theme) {
     successButton: `0 14px 12px ${alpha(theme.palette.success.main, 0.2)}`,
     greyButton: `0 14px 12px ${alpha(theme.palette.grey[500], 0.2)}`
   };
-}
+};
+
+export default CustomShadows;

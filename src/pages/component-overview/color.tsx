@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 // material-ui
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
@@ -9,7 +8,20 @@ import Box from '@mui/material/Box';
 // project imports
 import MainCard from 'components/MainCard';
 
-function ColorBox({ bgcolor, title, data, dark, main }) {
+interface ColorData {
+  label: string;
+  color: string;
+}
+
+interface ColorBoxProps {
+  bgcolor: string;
+  title?: string;
+  data?: ColorData;
+  dark?: boolean;
+  main?: boolean;
+}
+
+const ColorBox: React.FC<ColorBoxProps> = ({ bgcolor, title, data, dark, main }) => {
   return (
     <Card sx={{ '&.MuiPaper-root': { borderRadius: '0px' } }}>
       <Box
@@ -43,11 +55,11 @@ function ColorBox({ bgcolor, title, data, dark, main }) {
       </Box>
     </Card>
   );
-}
+};
 
 // ===============================|| COMPONENT - COLOR ||=============================== //
 
-export default function ComponentColor() {
+const ComponentColor: React.FC = () => {
   return (
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, sm: 6, md: 4 }}>
@@ -126,12 +138,6 @@ export default function ComponentColor() {
       </Grid>
     </Grid>
   );
-}
-
-ColorBox.propTypes = {
-  bgcolor: PropTypes.string,
-  title: PropTypes.string,
-  data: PropTypes.object,
-  dark: PropTypes.bool,
-  main: PropTypes.bool
 };
+
+export default ComponentColor;

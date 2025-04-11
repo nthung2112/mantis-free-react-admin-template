@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 // material-ui
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -17,11 +16,19 @@ import { NumericFormat } from 'react-number-format';
 // project imports
 import Dot from 'components/@extended/Dot';
 
-function createData(tracking_no, name, fat, carbs, protein) {
+interface Data {
+  tracking_no: number;
+  name: string;
+  fat: number;
+  carbs: number;
+  protein: number;
+}
+
+function createData(tracking_no: number, name: string, fat: number, carbs: number, protein: number): Data {
   return { tracking_no, name, fat, carbs, protein };
 }
 
-const rows = [
+const rows: Data[] = [
   createData(84564564, 'Camera Lens', 40, 2, 40570),
   createData(98764564, 'Laptop', 300, 0, 180139),
   createData(98756325, 'Mobile', 355, 1, 90989),
@@ -34,7 +41,9 @@ const rows = [
   createData(98753291, 'Chair', 100, 0, 14001)
 ];
 
-function descendingComparator(a, b, orderBy) {
+type Order = 'asc' | 'desc';
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T): number {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -44,12 +53,15 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-function getComparator(order, orderBy) {
+function getComparator<Key extends keyof any>(
+  order: Order,
+  orderBy: Key
+): (a: { [key in Key]: number | string }, b: { [key in Key]: number | string }) => number {
   return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number): T[] {
+  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -60,7 +72,14 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
+interface HeadCell {
+  id: keyof Data;
+  align: 'left' | 'right' | 'center';
+  disablePadding: boolean;
+  label: string;
+}
+
+const headCells: readonly HeadCell[] = [
   {
     id: 'tracking_no',
     align: 'left',
@@ -83,7 +102,6 @@ const headCells = [
     id: 'carbs',
     align: 'left',
     disablePadding: false,
-
     label: 'Status'
   },
   {
@@ -96,7 +114,12 @@ const headCells = [
 
 // ==============================|| ORDER TABLE - HEADER ||============================== //
 
-function OrderTableHead({ order, orderBy }) {
+interface OrderTableHeadProps {
+  order: Order;
+  orderBy: keyof Data;
+}
+
+const OrderTableHead: React.FC<OrderTableHeadProps> = ({ order, orderBy }) => {
   return (
     <TableHead>
       <TableRow>
@@ -113,11 +136,15 @@ function OrderTableHead({ order, orderBy }) {
       </TableRow>
     </TableHead>
   );
+};
+
+interface OrderStatusProps {
+  status: number;
 }
 
-function OrderStatus({ status }) {
-  let color;
-  let title;
+const OrderStatus: React.FC<OrderStatusProps> = ({ status }) => {
+  let color: 'warning' | 'success' | 'error' | 'primary';
+  let title: string;
 
   switch (status) {
     case 0:
@@ -143,13 +170,13 @@ function OrderStatus({ status }) {
       <Typography>{title}</Typography>
     </Stack>
   );
-}
+};
 
 // ==============================|| ORDER TABLE ||============================== //
 
-export default function OrderTable() {
-  const order = 'asc';
-  const orderBy = 'tracking_no';
+const OrderTable: React.FC = () => {
+  const order: Order = 'asc';
+  const orderBy: keyof Data = 'tracking_no';
 
   return (
     <Box>
@@ -196,8 +223,6 @@ export default function OrderTable() {
       </TableContainer>
     </Box>
   );
-}
+};
 
-OrderTableHead.propTypes = { order: PropTypes.any, orderBy: PropTypes.string };
-
-OrderStatus.propTypes = { status: PropTypes.number };
+export default OrderTable;

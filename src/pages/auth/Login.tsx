@@ -7,26 +7,28 @@ import Typography from '@mui/material/Typography';
 
 // project imports
 import AuthWrapper from 'sections/auth/AuthWrapper';
-import FirebaseRegister from 'sections/auth/AuthRegister';
+import AuthLogin from 'sections/auth/AuthLogin';
 
-// ================================|| JWT - REGISTER ||================================ //
+// ================================|| JWT - LOGIN ||================================ //
 
-export default function Register() {
+const Login: React.FC = () => {
   return (
     <AuthWrapper>
       <Grid container spacing={3}>
         <Grid size={12}>
           <Stack direction="row" sx={{ alignItems: 'baseline', justifyContent: 'space-between', mb: { xs: -0.5, sm: 0.5 } }}>
-            <Typography variant="h3">Sign up</Typography>
-            <Typography component={Link} to="/login" variant="body1" sx={{ textDecoration: 'none' }} color="primary">
-              Already have an account?
+            <Typography variant="h3">Login</Typography>
+            <Typography component={Link} to={'/register'} variant="body1" sx={{ textDecoration: 'none' }} color="primary">
+              Don&apos;t have an account?
             </Typography>
           </Stack>
         </Grid>
         <Grid size={12}>
-          <FirebaseRegister />
+          <AuthLogin />
         </Grid>
       </Grid>
     </AuthWrapper>
   );
-}
+};
+
+export default Login;

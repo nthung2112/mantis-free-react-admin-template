@@ -1,17 +1,50 @@
-import PropTypes from 'prop-types';
+import React from 'react';
+
+// material-ui
+import { Theme } from '@mui/material/styles';
+import { Components } from '@mui/material';
 
 // project imports
-import getColors from 'utils/getColors';
+import getColors from '../../utils/getColors';
+import { CustomPaletteColor } from '../../types/theme';
 
 // assets
 import BorderOutlined from '@ant-design/icons/BorderOutlined';
 import CheckSquareFilled from '@ant-design/icons/CheckSquareFilled';
 import MinusSquareFilled from '@ant-design/icons/MinusSquareFilled';
 
-// ==============================|| RADIO - COLORS ||============================== //
+// types
+interface ColorProps {
+  color: 'primary' | 'secondary' | 'success' | 'warning' | 'info' | 'error';
+  theme: Theme;
+}
 
-function getColorStyle({ color, theme }) {
-  const colors = getColors(theme, color);
+type SizeType = 'small' | 'medium' | 'large';
+
+interface CheckboxStyleOverrides {
+  MuiCheckbox: {
+    defaultProps?: {
+      className?: string;
+      icon?: React.ReactNode;
+      checkedIcon?: React.ReactNode;
+      indeterminateIcon?: React.ReactNode;
+    };
+    styleOverrides?: {
+      root?: Record<string, any>;
+      colorPrimary?: Record<string, any>;
+      colorSecondary?: Record<string, any>;
+      colorSuccess?: Record<string, any>;
+      colorWarning?: Record<string, any>;
+      colorInfo?: Record<string, any>;
+      colorError?: Record<string, any>;
+    };
+  };
+}
+
+// ==============================|| CHECKBOX - COLORS ||============================== //
+
+function getColorStyle({ color, theme }: ColorProps) {
+  const colors = getColors(theme, color) as CustomPaletteColor;
   const { lighter, main, dark } = colors;
 
   return {
@@ -28,7 +61,7 @@ function getColorStyle({ color, theme }) {
   };
 }
 
-function getSizeStyle(size) {
+function getSizeStyle(size: SizeType) {
   switch (size) {
     case 'small':
       return { fontSize: 1.15 };
@@ -42,7 +75,7 @@ function getSizeStyle(size) {
 
 // ==============================|| CHECKBOX - STYLE ||============================== //
 
-function checkboxStyle(size) {
+function checkboxStyle(size: SizeType) {
   const sizes = getSizeStyle(size);
 
   return {
@@ -54,7 +87,7 @@ function checkboxStyle(size) {
 
 // ==============================|| OVERRIDES - CHECKBOX ||============================== //
 
-export default function Checkbox(theme) {
+export default function Checkbox(theme: Theme): CheckboxStyleOverrides {
   const { palette } = theme;
 
   return {
@@ -68,7 +101,7 @@ export default function Checkbox(theme) {
       styleOverrides: {
         root: {
           borderRadius: 0,
-          color: palette.secondary[300],
+          color: palette.secondary.light,
           '&.size-small': {
             ...checkboxStyle('small')
           },
@@ -89,5 +122,3 @@ export default function Checkbox(theme) {
     }
   };
 }
-
-getColorStyle.propTypes = { color: PropTypes.any, theme: PropTypes.any };

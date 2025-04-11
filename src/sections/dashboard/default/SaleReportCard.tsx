@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 // material-ui
 import Grid from '@mui/material/Grid';
@@ -9,8 +9,13 @@ import Typography from '@mui/material/Typography';
 // project imports
 import SalesChart from 'sections/dashboard/SalesChart';
 
+interface StatusOption {
+  value: string;
+  label: string;
+}
+
 // sales report status
-const status = [
+const status: StatusOption[] = [
   {
     value: 'today',
     label: 'Today'
@@ -27,8 +32,12 @@ const status = [
 
 // ==============================|| DEFAULT - SALES REPORT ||============================== //
 
-export default function SaleReportCard() {
-  const [value, setValue] = useState('today');
+const SaleReportCard: React.FC = () => {
+  const [value, setValue] = useState<string>('today');
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
 
   return (
     <>
@@ -42,7 +51,7 @@ export default function SaleReportCard() {
             size="small"
             select
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={handleChange}
             sx={{ '& .MuiInputBase-input': { py: 0.75, fontSize: '0.875rem' } }}
           >
             {status.map((option) => (
@@ -56,4 +65,6 @@ export default function SaleReportCard() {
       <SalesChart />
     </>
   );
-}
+};
+
+export default SaleReportCard;

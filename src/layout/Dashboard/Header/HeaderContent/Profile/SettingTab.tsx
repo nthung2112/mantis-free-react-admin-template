@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 // material-ui
@@ -17,11 +17,11 @@ import UnorderedListOutlined from '@ant-design/icons/UnorderedListOutlined';
 
 // ==============================|| HEADER PROFILE - SETTING TAB ||============================== //
 
-export default function SettingTab() {
+const SettingTab = (): React.ReactElement => {
   const navigate = useNavigate();
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const handleListItemClick = (event, index, route = '') => {
+  const handleListItemClick = (event: React.MouseEvent<HTMLDivElement>, index: number, route: string = ''): void => {
     setSelectedIndex(index);
 
     if (route && route !== '') {
@@ -32,34 +32,34 @@ export default function SettingTab() {
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>
       <Link underline="none" sx={{ color: 'inherit' }} target="_blank" href="https://codedthemes.support-hub.io/">
-        <ListItemButton selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}>
+        <ListItemButton selected={selectedIndex === 0} onClick={(event): void => handleListItemClick(event, 0)}>
           <ListItemIcon>
             <QuestionCircleOutlined />
           </ListItemIcon>
           <ListItemText primary="Support" />
         </ListItemButton>
       </Link>
-      <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
+      <ListItemButton selected={selectedIndex === 1} onClick={(event): void => handleListItemClick(event, 1)}>
         <ListItemIcon>
           <UserOutlined />
         </ListItemIcon>
         <ListItemText primary="Account Settings" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 2} onClick={(event) => handleListItemClick(event, 2)}>
+      <ListItemButton selected={selectedIndex === 2} onClick={(event): void => handleListItemClick(event, 2)}>
         <ListItemIcon>
           <LockOutlined />
         </ListItemIcon>
         <ListItemText primary="Privacy Center" />
       </ListItemButton>
-      <Link underline="none" style={{ color: 'inherit' }} target="_blank" href="https://codedthemes.support-hub.io/">
-        <ListItemButton selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3)}>
+      <Link underline="none" sx={{ color: 'inherit' }} target="_blank" href="https://codedthemes.support-hub.io/">
+        <ListItemButton selected={selectedIndex === 3} onClick={(event): void => handleListItemClick(event, 3)}>
           <ListItemIcon>
             <CommentOutlined />
           </ListItemIcon>
           <ListItemText primary="Feedback" />
         </ListItemButton>
       </Link>
-      <ListItemButton selected={selectedIndex === 4} onClick={(event) => handleListItemClick(event, 4)}>
+      <ListItemButton selected={selectedIndex === 4} onClick={(event): void => handleListItemClick(event, 4)}>
         <ListItemIcon>
           <UnorderedListOutlined />
         </ListItemIcon>
@@ -67,4 +67,6 @@ export default function SettingTab() {
       </ListItemButton>
     </List>
   );
-}
+};
+
+export default SettingTab;

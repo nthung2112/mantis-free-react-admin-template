@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // material-ui
+import { Theme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
+import Popper, { PopperProps } from '@mui/material/Popper';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 
@@ -17,28 +18,35 @@ import Transitions from 'components/@extended/Transitions';
 // assets
 import MoreOutlined from '@ant-design/icons/MoreOutlined';
 
+// types
+interface PopperChildProps {
+  placement?: PopperProps['placement'];
+  transition?: boolean;
+  in?: boolean;
+}
+
 // ==============================|| HEADER CONTENT - MOBILE ||============================== //
 
-export default function MobileSection() {
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
+const MobileSection = (): React.ReactElement => {
+  const [open, setOpen] = useState<boolean>(false);
+  const anchorRef = useRef<HTMLButtonElement | null>(null);
 
-  const handleToggle = () => {
+  const handleToggle = (): void => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  const handleClose = (event: MouseEvent | TouchEvent): void => {
+    if (anchorRef.current && anchorRef.current.contains(event.target as Node)) {
       return;
     }
 
     setOpen(false);
   };
 
-  const prevOpen = useRef(open);
+  const prevOpen = useRef<boolean>(open);
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
+      anchorRef.current?.focus();
     }
 
     prevOpen.current = open;
@@ -48,7 +56,7 @@ export default function MobileSection() {
     <>
       <Box sx={{ flexShrink: 0, ml: 0.75 }}>
         <IconButton
-          sx={(theme) => ({
+          sx={(theme: Theme) => ({
             color: 'text.primary',
             bgcolor: open ? 'grey.300' : 'grey.100',
             ...theme.applyStyles('dark', { bgcolor: open ? 'grey.200' : 'background.default' })
@@ -83,9 +91,9 @@ export default function MobileSection() {
           ]
         }}
       >
-        {({ TransitionProps }) => (
-          <Transitions type="fade" in={open} {...TransitionProps}>
-            <Paper sx={(theme) => ({ boxShadow: theme.customShadows.z1 })}>
+        {(props) => (
+          <Transitions type="fade" in={open} {...props.TransitionProps}>
+            <Paper sx={(theme: Theme) => ({ boxShadow: theme.customShadows.z1 })}>
               <ClickAwayListener onClickAway={handleClose}>
                 <AppBar color="inherit">
                   <Toolbar>
@@ -100,4 +108,6 @@ export default function MobileSection() {
       </Popper>
     </>
   );
-}
+};
+
+export default MobileSection;

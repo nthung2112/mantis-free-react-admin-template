@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // material-ui
+import { Theme, SxProps } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
@@ -29,36 +30,36 @@ import MessageOutlined from '@ant-design/icons/MessageOutlined';
 import SettingOutlined from '@ant-design/icons/SettingOutlined';
 
 // sx styles
-const avatarSX = {
+const avatarSX: SxProps<Theme> = {
   width: 36,
   height: 36,
   fontSize: '1rem'
 };
 
-const actionSX = {
+const actionSX: SxProps<Theme> = {
   mt: '6px',
   ml: 1,
   top: 'auto',
   right: 'auto',
   alignSelf: 'flex-start',
-
   transform: 'none'
 };
 
 // ==============================|| HEADER CONTENT - NOTIFICATION ||============================== //
 
-export default function Notification() {
-  const downMD = useMediaQuery((theme) => theme.breakpoints.down('md'));
+const Notification = (): React.ReactElement => {
+  const downMD = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
-  const anchorRef = useRef(null);
-  const [read, setRead] = useState(2);
-  const [open, setOpen] = useState(false);
-  const handleToggle = () => {
+  const anchorRef = useRef<HTMLButtonElement | null>(null);
+  const [read, setRead] = useState<number>(2);
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleToggle = (): void => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  const handleClose = (event: MouseEvent | TouchEvent): void => {
+    if (anchorRef.current && anchorRef.current.contains(event.target as Node)) {
       return;
     }
     setOpen(false);
@@ -69,7 +70,7 @@ export default function Notification() {
       <IconButton
         color="secondary"
         variant="light"
-        sx={(theme) => ({
+        sx={(theme: Theme) => ({
           color: 'text.primary',
           bgcolor: open ? 'grey.100' : 'transparent',
           ...theme.applyStyles('dark', { bgcolor: open ? 'background.default' : 'transparent' })
@@ -91,11 +92,15 @@ export default function Notification() {
         role={undefined}
         transition
         disablePortal
-        popperOptions={{ modifiers: [{ name: 'offset', options: { offset: [downMD ? -5 : 0, 9] } }] }}
+        popperOptions={{
+          modifiers: [{ name: 'offset', options: { offset: [downMD ? -5 : 0, 9] } }]
+        }}
       >
-        {({ TransitionProps }) => (
-          <Transitions type="grow" position={downMD ? 'top' : 'top-right'} in={open} {...TransitionProps}>
-            <Paper sx={(theme) => ({ boxShadow: theme.customShadows.z1, width: '100%', minWidth: 285, maxWidth: { xs: 285, md: 420 } })}>
+        {(popperProps): React.ReactElement => (
+          <Transitions type="grow" position={downMD ? 'top' : 'top-right'} in={open} {...popperProps.TransitionProps}>
+            <Paper
+              sx={(theme: Theme) => ({ boxShadow: theme.customShadows.z1, width: '100%', minWidth: 285, maxWidth: { xs: 285, md: 420 } })}
+            >
               <ClickAwayListener onClickAway={handleClose}>
                 <MainCard
                   title="Notification"
@@ -106,7 +111,7 @@ export default function Notification() {
                     <>
                       {read > 0 && (
                         <Tooltip title="Mark as all read">
-                          <IconButton color="success" size="small" onClick={() => setRead(0)}>
+                          <IconButton color="success" size="small" onClick={(): void => setRead(0)}>
                             <CheckCircleOutlined style={{ fontSize: '1.15rem' }} />
                           </IconButton>
                         </Tooltip>
@@ -253,4 +258,6 @@ export default function Notification() {
       </Popper>
     </Box>
   );
-}
+};
+
+export default Notification;

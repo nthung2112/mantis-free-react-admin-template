@@ -11,10 +11,16 @@ import Box from '@mui/material/Box';
 import MainCard from 'components/MainCard';
 import IncomeAreaChart from './IncomeAreaChart';
 
+type ViewType = 'monthly' | 'weekly';
+
 // ==============================|| DEFAULT - UNIQUE VISITOR ||============================== //
 
-export default function UniqueVisitorCard() {
-  const [view, setView] = useState('monthly'); // 'monthly' or 'weekly'
+const UniqueVisitorCard: React.FC = () => {
+  const [view, setView] = useState<ViewType>('monthly');
+
+  const handleViewChange = (newView: ViewType) => () => {
+    setView(newView);
+  };
 
   return (
     <>
@@ -26,7 +32,7 @@ export default function UniqueVisitorCard() {
           <Stack direction="row" sx={{ alignItems: 'center' }}>
             <Button
               size="small"
-              onClick={() => setView('monthly')}
+              onClick={handleViewChange('monthly')}
               color={view === 'monthly' ? 'primary' : 'secondary'}
               variant={view === 'monthly' ? 'outlined' : 'text'}
             >
@@ -34,7 +40,7 @@ export default function UniqueVisitorCard() {
             </Button>
             <Button
               size="small"
-              onClick={() => setView('weekly')}
+              onClick={handleViewChange('weekly')}
               color={view === 'weekly' ? 'primary' : 'secondary'}
               variant={view === 'weekly' ? 'outlined' : 'text'}
             >
@@ -50,4 +56,6 @@ export default function UniqueVisitorCard() {
       </MainCard>
     </>
   );
-}
+};
+
+export default UniqueVisitorCard;

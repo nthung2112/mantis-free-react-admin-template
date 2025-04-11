@@ -6,7 +6,7 @@ import MainCard from 'components/MainCard';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
-export default function SamplePage() {
+const SamplePage: React.FC = () => {
   return (
     <MainCard title="Sample Card">
       <Typography variant="body2">
@@ -17,4 +17,6 @@ export default function SamplePage() {
       </Typography>
     </MainCard>
   );
-}
+};
+
+export default SamplePage;

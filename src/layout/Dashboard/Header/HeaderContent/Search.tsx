@@ -1,3 +1,5 @@
+import React from 'react';
+
 // material-ui
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -9,7 +11,7 @@ import SearchOutlined from '@ant-design/icons/SearchOutlined';
 
 // ==============================|| HEADER CONTENT - SEARCH ||============================== //
 
-export default function Search() {
+const Search = (): React.ReactElement => {
   return (
     <Box sx={{ width: '100%', ml: { xs: 0, md: 1 } }}>
       <FormControl sx={{ width: { xs: '100%', md: 224 } }}>
@@ -30,4 +32,6 @@ export default function Search() {
       </FormControl>
     </Box>
   );
-}
+};
+
+export default Search;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // material-ui
-import { alpha, useTheme } from '@mui/material/styles';
+import { alpha, useTheme, Theme } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
@@ -14,13 +14,21 @@ import { BarChart } from '@mui/x-charts/BarChart';
 // project imports
 import MainCard from 'components/MainCard';
 
+interface ChartDataItem {
+  data: number[];
+  label: string;
+  color: string;
+  valueFormatter: (value: number | null) => string;
+  type?: 'bar';
+}
+
 // ==============================|| SALES COLUMN CHART ||============================== //
 
-export default function SalesChart() {
+const SalesChart: React.FC = () => {
   const theme = useTheme();
 
-  const [showIncome, setShowIncome] = useState(true);
-  const [showCostOfSales, setShowCostOfSales] = useState(true);
+  const [showIncome, setShowIncome] = useState<boolean>(true);
+  const [showCostOfSales, setShowCostOfSales] = useState<boolean>(true);
 
   const handleIncomeChange = () => {
     setShowIncome(!showIncome);
@@ -30,12 +38,16 @@ export default function SalesChart() {
     setShowCostOfSales(!showCostOfSales);
   };
 
-  const valueFormatter = (value) => `$ ${value} Thousands`;
+  const valueFormatter = (value: number | null): string => {
+    if (value === null) return '$ 0 Thousands';
+    return `$ ${value} Thousands`;
+  };
+
   const primaryColor = theme.palette.primary.main;
   const warningColor = theme.palette.warning.main;
 
-  const lables = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const data = [
+  const lables: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const data: ChartDataItem[] = [
     { data: [180, 90, 135, 114, 120, 145, 170, 200, 170, 230, 210, 180], label: 'Income', color: warningColor, valueFormatter },
     { data: [120, 45, 78, 150, 168, 99, 180, 220, 180, 210, 220, 200], label: 'Cost of Sales', color: primaryColor, valueFormatter }
   ];
@@ -86,7 +98,7 @@ export default function SalesChart() {
           yAxis={[{ disableLine: true, disableTicks: true, tickMaxStep: 20, tickLabelStyle: axisFonstyle }]}
           series={data
             .filter((series) => (series.label === 'Income' && showIncome) || (series.label === 'Cost of Sales' && showCostOfSales))
-            .map((series) => ({ ...series, type: 'bar' }))}
+            .map((series) => ({ ...series, type: 'bar' as const }))}
           slotProps={{ legend: { hidden: true }, bar: { rx: 5, ry: 5 } }}
           axisHighlight={{ x: 'none' }}
           margin={{ top: 30, left: 40, right: 10 }}
@@ -99,4 +111,6 @@ export default function SalesChart() {
       </Box>
     </MainCard>
   );
-}
+};
+
+export default SalesChart;

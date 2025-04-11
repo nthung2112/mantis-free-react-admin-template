@@ -1,4 +1,7 @@
+import React from 'react';
+
 // material-ui
+import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
@@ -15,8 +18,8 @@ import { GithubOutlined } from '@ant-design/icons';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
-export default function HeaderContent() {
-  const downLG = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+const HeaderContent = (): React.ReactElement => {
+  const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   return (
     <>
@@ -39,4 +42,6 @@ export default function HeaderContent() {
       {downLG && <MobileSection />}
     </>
   );
-}
+};
+
+export default HeaderContent;

@@ -11,7 +11,7 @@ import MainCard from 'components/MainCard';
 
 // ==============================|| COMPONENTS - TYPOGRAPHY ||============================== //
 
-export default function ComponentTypography() {
+const ComponentTypography: React.FC = () => {
   return (
     <Grid container spacing={3}>
       <Grid size={{ xs: 12, lg: 6 }}>
@@ -233,4 +233,6 @@ export default function ComponentTypography() {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default ComponentTypography;

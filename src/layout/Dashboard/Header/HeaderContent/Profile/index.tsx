@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { Theme, useTheme } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import CardContent from '@mui/material/CardContent';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -30,50 +29,58 @@ import SettingOutlined from '@ant-design/icons/SettingOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import avatar1 from 'assets/images/users/avatar-1.png';
 
+// types
+interface TabPanelProps {
+  children?: React.ReactNode;
+  value: number;
+  index: number;
+  dir?: string;
+}
+
 // tab panel wrapper
-function TabPanel({ children, value, index, ...other }) {
+const TabPanel: React.FC<TabPanelProps> = ({ children, value, index, ...other }) => {
   return (
     <div role="tabpanel" hidden={value !== index} id={`profile-tabpanel-${index}`} aria-labelledby={`profile-tab-${index}`} {...other}>
       {value === index && children}
     </div>
   );
-}
+};
 
-function a11yProps(index) {
+const a11yProps = (index: number) => {
   return {
     id: `profile-tab-${index}`,
     'aria-controls': `profile-tabpanel-${index}`
   };
-}
+};
 
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
-export default function Profile() {
+const Profile = (): React.ReactElement => {
   const theme = useTheme();
 
-  const anchorRef = useRef(null);
-  const [open, setOpen] = useState(false);
-  const handleToggle = () => {
+  const anchorRef = useRef<HTMLButtonElement | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const handleToggle = (): void => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  const handleClose = (event: MouseEvent | TouchEvent): void => {
+    if (anchorRef.current && anchorRef.current.contains(event.target as Node)) {
       return;
     }
     setOpen(false);
   };
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number>(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
 
   return (
     <Box sx={{ flexShrink: 0, ml: 0.75 }}>
       <ButtonBase
-        sx={(theme) => ({
+        sx={(theme: Theme) => ({
           p: 0.25,
           bgcolor: open ? 'grey.100' : 'transparent',
           borderRadius: 1,
@@ -112,14 +119,16 @@ export default function Profile() {
           ]
         }}
       >
-        {({ TransitionProps }) => (
-          <Transitions type="grow" position="top-right" in={open} {...TransitionProps}>
-            <Paper sx={(theme) => ({ boxShadow: theme.customShadows.z1, width: 290, minWidth: 240, maxWidth: { xs: 250, md: 290 } })}>
+        {(props): React.ReactElement => (
+          <Transitions type="grow" position="top-right" in={open} {...props.TransitionProps}>
+            <Paper
+              sx={(theme: Theme) => ({ boxShadow: theme.customShadows.z1, width: 290, minWidth: 240, maxWidth: { xs: 250, md: 290 } })}
+            >
               <ClickAwayListener onClickAway={handleClose}>
                 <MainCard elevation={0} border={false} content={false}>
                   <CardContent sx={{ px: 2.5, pt: 3 }}>
-                    <Grid container justifyContent="space-between" alignItems="center">
-                      <Grid>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Box sx={{ flex: '1 1 auto' }}>
                         <Stack direction="row" sx={{ gap: 1.25, alignItems: 'center' }}>
                           <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
                           <Stack>
@@ -129,15 +138,15 @@ export default function Profile() {
                             </Typography>
                           </Stack>
                         </Stack>
-                      </Grid>
-                      <Grid>
+                      </Box>
+                      <Box>
                         <Tooltip title="Logout">
                           <IconButton size="large" sx={{ color: 'text.primary' }}>
                             <LogoutOutlined />
                           </IconButton>
                         </Tooltip>
-                      </Grid>
-                    </Grid>
+                      </Box>
+                    </Box>
                   </CardContent>
 
                   <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -190,6 +199,6 @@ export default function Profile() {
       </Popper>
     </Box>
   );
-}
+};
 
-TabPanel.propTypes = { children: PropTypes.node, value: PropTypes.number, index: PropTypes.number, other: PropTypes.any };
+export default Profile;

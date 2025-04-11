@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 
 // material-ui
 import List from '@mui/material/List';
@@ -13,9 +13,14 @@ import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import WalletOutlined from '@ant-design/icons/WalletOutlined';
 
+// types
+interface ProfileTabProps {
+  handleLogout?: () => void;
+}
+
 // ==============================|| HEADER PROFILE - PROFILE TAB ||============================== //
 
-export default function ProfileTab() {
+const ProfileTab: React.FC<ProfileTabProps> = () => {
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>
       <ListItemButton>
@@ -51,6 +56,6 @@ export default function ProfileTab() {
       </ListItemButton>
     </List>
   );
-}
+};
 
-ProfileTab.propTypes = { handleLogout: PropTypes.func };
+export default ProfileTab;
