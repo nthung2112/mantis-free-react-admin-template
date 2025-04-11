@@ -15,11 +15,11 @@ import Box from '@mui/material/Box';
 // project imports
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
-import MonthlyBarChart from 'sections/dashboard/default/MonthlyBarChart';
-import ReportAreaChart from 'sections/dashboard/default/ReportAreaChart';
-import UniqueVisitorCard from 'sections/dashboard/default/UniqueVisitorCard';
-import SaleReportCard from 'sections/dashboard/default/SaleReportCard';
-import OrdersTable from 'sections/dashboard/default/OrdersTable';
+import MonthlyBarChart from 'pages/dashboard/default/MonthlyBarChart';
+import ReportAreaChart from 'pages/dashboard/default/ReportAreaChart';
+import UniqueVisitorCard from 'pages/dashboard/default/UniqueVisitorCard';
+import SaleReportCard from 'pages/dashboard/default/SaleReportCard';
+import OrdersTable from 'pages/dashboard/default/OrdersTable';
 
 // assets
 import GiftOutlined from '@ant-design/icons/GiftOutlined';
