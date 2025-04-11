@@ -12,8 +12,8 @@ import Box from '@mui/material/Box';
 // project imports
 import Search from './Search';
 import Profile from './Profile';
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
+import IconButton from 'components/extended/IconButton';
+import Transitions from 'components/extended/Transitions';
 
 // assets
 import MoreOutlined from '@ant-design/icons/MoreOutlined';

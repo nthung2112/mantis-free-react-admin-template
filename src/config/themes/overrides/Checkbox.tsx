@@ -5,8 +5,8 @@ import { Theme } from '@mui/material/styles';
 import { Components } from '@mui/material';
 
 // project imports
-import getColors from '../../utils/getColors';
-import { CustomPaletteColor } from '../../types/theme';
+import getColors from '../../../utils/getColors';
+import { CustomPaletteColor } from '../../../types/theme';
 
 // assets
 import BorderOutlined from '@ant-design/icons/BorderOutlined';

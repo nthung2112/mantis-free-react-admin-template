@@ -19,8 +19,8 @@ import Box from '@mui/material/Box';
 
 // project imports
 import MainCard from 'components/MainCard';
-import IconButton from 'components/@extended/IconButton';
-import Transitions from 'components/@extended/Transitions';
+import IconButton from 'components/extended/IconButton';
+import Transitions from 'components/extended/Transitions';
 
 // assets
 import BellOutlined from '@ant-design/icons/BellOutlined';

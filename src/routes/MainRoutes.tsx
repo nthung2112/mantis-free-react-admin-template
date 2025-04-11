@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 // project imports
 import Loadable from 'components/Loadable';
-import DashboardLayout from 'layout/Dashboard';
+import DashboardLayout from 'components/layout/Dashboard';
 
 // render- Dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/default')));

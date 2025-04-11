@@ -10,7 +10,7 @@ import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project imports
 import MainCard from 'components/MainCard';
-import navigation from 'menu-items';
+import navigation from 'config/menu-items';
 import { MenuItem, BreadcrumbsProps, CustomLink, MenuType } from 'types/menu';
 
 // assets

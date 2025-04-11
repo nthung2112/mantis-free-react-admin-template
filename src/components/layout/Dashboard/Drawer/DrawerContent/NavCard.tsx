@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 // project import
 import MainCard from 'components/MainCard';
-import AnimateButton from 'components/@extended/AnimateButton';
+import AnimateButton from 'components/extended/AnimateButton';
 
 // assets
 import avatar from 'assets/images/users/avatar-group.png';

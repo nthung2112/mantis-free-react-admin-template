@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 
 // project imports
 import router from 'routes';
-import ThemeCustomization from 'themes';
+import ThemeCustomization from 'config/themes';
 import ScrollTop from 'components/ScrollTop';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //

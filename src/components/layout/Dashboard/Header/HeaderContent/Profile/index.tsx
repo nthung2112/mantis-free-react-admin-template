@@ -18,10 +18,10 @@ import Box from '@mui/material/Box';
 // project imports
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
-import Avatar from 'components/@extended/Avatar';
+import Avatar from 'components/extended/Avatar';
 import MainCard from 'components/MainCard';
-import Transitions from 'components/@extended/Transitions';
-import IconButton from 'components/@extended/IconButton';
+import Transitions from 'components/extended/Transitions';
+import IconButton from 'components/extended/IconButton';
 
 // assets
 import LogoutOutlined from '@ant-design/icons/LogoutOutlined';

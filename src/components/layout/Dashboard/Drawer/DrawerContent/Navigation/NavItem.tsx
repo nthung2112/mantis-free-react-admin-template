@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import { Theme } from '@mui/material/styles';
 
 // project imports
-import IconButton from 'components/@extended/IconButton';
+import IconButton from 'components/extended/IconButton';
 import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 import { NavItemType, NavIcon } from 'types/navigation';
 
