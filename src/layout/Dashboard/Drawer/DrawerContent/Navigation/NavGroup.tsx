@@ -1,16 +1,22 @@
-import PropTypes from 'prop-types';
 // material-ui
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useState } from 'react';
 
 // project import
 import NavItem from './NavItem';
 import { useGetMenuMaster } from 'api/menu';
+import { NavItemType } from 'types/navigation';
 
-export default function NavGroup({ item }) {
-  const { menuMaster } = useGetMenuMaster();
+interface NavGroupProps {
+  item: NavItemType;
+}
+
+export default function NavGroup({ item }: NavGroupProps) {
+  const { menuMaster = { isDashboardDrawerOpened: false } } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
+  const [selectedID, setSelectedID] = useState<string>('');
 
   const navCollapse = item.children?.map((menuItem) => {
     switch (menuItem.type) {
@@ -21,7 +27,7 @@ export default function NavGroup({ item }) {
           </Typography>
         );
       case 'item':
-        return <NavItem key={menuItem.id} item={menuItem} level={1} />;
+        return <NavItem key={menuItem.id} item={menuItem} level={1} setSelectedID={setSelectedID} />;
       default:
         return (
           <Typography key={menuItem.id} variant="h6" color="error" align="center">
@@ -50,5 +56,3 @@ export default function NavGroup({ item }) {
     </List>
   );
 }
-
-NavGroup.propTypes = { item: PropTypes.object };

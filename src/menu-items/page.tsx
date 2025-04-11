@@ -1,15 +1,16 @@
 // assets
 import { LoginOutlined, ProfileOutlined } from '@ant-design/icons';
+import { NavIcon, NavItemType } from 'types/navigation';
 
 // icons
-const icons = {
+const icons: { [key: string]: NavIcon } = {
   LoginOutlined,
   ProfileOutlined
 };
 
 // ==============================|| MENU ITEMS - EXTRA PAGES ||============================== //
 
-const pages = {
+const pages: NavItemType = {
   id: 'authentication',
   title: 'Authentication',
   type: 'group',

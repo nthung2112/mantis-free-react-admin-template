@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
+import { Theme } from '@mui/material/styles';
 
 // project imports
 import DrawerHeader from './DrawerHeader';
@@ -13,12 +13,16 @@ import MiniDrawerStyled from './MiniDrawerStyled';
 import { DRAWER_WIDTH } from 'config';
 import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 
+interface MainDrawerProps {
+  window?: () => Window;
+}
+
 // ==============================|| MAIN LAYOUT - DRAWER ||============================== //
 
-export default function MainDrawer({ window }) {
-  const { menuMaster } = useGetMenuMaster();
+export default function MainDrawer({ window }: MainDrawerProps) {
+  const { menuMaster = { isDashboardDrawerOpened: false } } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
-  const downLG = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   // responsive drawer container
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -59,5 +63,3 @@ export default function MainDrawer({ window }) {
     </Box>
   );
 }
-
-MainDrawer.propTypes = { window: PropTypes.func };

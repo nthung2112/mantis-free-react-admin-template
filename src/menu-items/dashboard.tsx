@@ -1,5 +1,6 @@
 // assets
 import { DashboardOutlined } from '@ant-design/icons';
+import { NavItemType } from 'types/navigation';
 
 // icons
 const icons = {
@@ -8,7 +9,7 @@ const icons = {
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
-const dashboard = {
+const dashboard: NavItemType = {
   id: 'group-dashboard',
   title: 'Navigation',
   type: 'group',

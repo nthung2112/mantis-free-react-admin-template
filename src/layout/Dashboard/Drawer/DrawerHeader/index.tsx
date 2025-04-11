@@ -1,12 +1,14 @@
-import PropTypes from 'prop-types';
-
 // project imports
 import DrawerHeaderStyled from './DrawerHeaderStyled';
 import Logo from 'components/logo';
 
+interface DrawerHeaderProps {
+  open: boolean;
+}
+
 // ==============================|| DRAWER HEADER ||============================== //
 
-export default function DrawerHeader({ open }) {
+export default function DrawerHeader({ open }: DrawerHeaderProps) {
   return (
     <DrawerHeaderStyled
       open={open}
@@ -22,5 +24,3 @@ export default function DrawerHeader({ open }) {
     </DrawerHeaderStyled>
   );
 }
-
-DrawerHeader.propTypes = { open: PropTypes.bool };

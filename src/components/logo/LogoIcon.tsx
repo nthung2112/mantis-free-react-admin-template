@@ -41,11 +41,11 @@ export default function LogoIcon() {
       />
       <defs>
         <linearGradient id="paint0_linear" x1="25.0225" y1="49.3259" x2="11.4189" y2="62.9295" gradientUnits="userSpaceOnUse">
-          <stop stopColor={theme.palette.primary.darker} />
+          <stop stopColor={theme.palette.primary.dark} />
           <stop offset="0.9637" stopColor={theme.palette.primary.dark} stopOpacity="0" />
         </linearGradient>
         <linearGradient id="paint1_linear" x1="103.5" y1="49.5" x2="114.5" y2="62" gradientUnits="userSpaceOnUse">
-          <stop stopColor={theme.palette.primary.darker} />
+          <stop stopColor={theme.palette.primary.dark} />
           <stop offset="1" stopColor={theme.palette.primary.dark} stopOpacity="0" />
         </linearGradient>
       </defs>

@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
-
 // material-ui
 import { alpha, styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { SxProps, Theme } from '@mui/material/styles';
 
 // third-party
 import SimpleBar from 'simplebar-react';
@@ -41,9 +40,16 @@ const SimpleBarStyle = styled(SimpleBar)(({ theme }) => ({
   }
 }));
 
+// types
+interface SimpleBarScrollProps {
+  children: React.ReactNode;
+  sx?: SxProps<Theme>;
+  [key: string]: any; // for other props
+}
+
 // ==============================|| SIMPLE SCROLL BAR ||============================== //
 
-export default function SimpleBarScroll({ children, sx, ...other }) {
+export default function SimpleBarScroll({ children, sx, ...other }: SimpleBarScrollProps) {
   const theme = useTheme();
 
   return (
@@ -61,5 +67,3 @@ export default function SimpleBarScroll({ children, sx, ...other }) {
     </>
   );
 }
-
-SimpleBarScroll.propTypes = { children: PropTypes.any, sx: PropTypes.any, other: PropTypes.any };

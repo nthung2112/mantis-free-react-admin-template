@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { ReactNode } from 'react';
 
 // material-ui
 import Grid from '@mui/material/Grid';
@@ -14,7 +14,11 @@ import AuthBackground from './AuthBackground';
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
-export default function AuthWrapper({ children }) {
+interface AuthWrapperProps {
+  children: ReactNode;
+}
+
+export default function AuthWrapper({ children }: AuthWrapperProps) {
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <AuthBackground />
@@ -41,5 +45,3 @@ export default function AuthWrapper({ children }) {
     </Box>
   );
 }
-
-AuthWrapper.propTypes = { children: PropTypes.node };

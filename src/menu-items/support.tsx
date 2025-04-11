@@ -1,15 +1,16 @@
 // assets
 import { ChromeOutlined, QuestionOutlined } from '@ant-design/icons';
+import { NavIcon, NavItemType } from 'types/navigation';
 
 // icons
-const icons = {
+const icons: { [key: string]: NavIcon } = {
   ChromeOutlined,
   QuestionOutlined
 };
 
 // ==============================|| MENU ITEMS - SAMPLE PAGE & DOCUMENTATION ||============================== //
 
-const support = {
+const support: NavItemType = {
   id: 'support',
   title: 'Support',
   type: 'group',

@@ -4,6 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
+import { Theme } from '@mui/material/styles';
 
 // project imports
 import Drawer from './Drawer';
@@ -19,7 +20,7 @@ import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 export default function DashboardLayout() {
   const { pathname } = useLocation();
   const { menuMasterLoading } = useGetMenuMaster();
-  const downXL = useMediaQuery((theme) => theme.breakpoints.down('xl'));
+  const downXL = useMediaQuery((theme: Theme) => theme.breakpoints.down('xl'));
 
   // set media wise responsive drawer
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function DashboardLayout() {
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
       <Header />
-      <Drawer />
+      <Drawer window={() => window} />
 
       <Box component="main" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
         <Toolbar sx={{ mt: 'inherit' }} />

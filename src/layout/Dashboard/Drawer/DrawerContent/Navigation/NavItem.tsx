@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import { Link, useLocation, matchPath } from 'react-router-dom';
+import { ElementType } from 'react';
 
 // material-ui
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -10,19 +10,27 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { Theme } from '@mui/material/styles';
 
 // project imports
 import IconButton from 'components/@extended/IconButton';
-
 import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
+import { NavItemType, NavIcon } from 'types/navigation';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
-export default function NavItem({ item, level, isParents = false, setSelectedID }) {
-  const { menuMaster } = useGetMenuMaster();
+interface NavItemProps {
+  item: NavItemType;
+  level: number;
+  isParents?: boolean;
+  setSelectedID?: (id: string) => void;
+}
+
+export default function NavItem({ item, level, isParents = false, setSelectedID }: NavItemProps) {
+  const { menuMaster = { isDashboardDrawerOpened: false } } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
 
-  const downLG = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   let itemTarget = '_self';
   if (item.target) {
@@ -37,8 +45,8 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
     }
   };
 
-  const Icon = item.icon;
-  const itemIcon = item.icon ? (
+  const Icon = item.icon as ElementType | undefined;
+  const itemIcon = Icon ? (
     <Icon
       style={{
         fontSize: drawerOpen ? '1rem' : '1.25rem',
@@ -50,7 +58,7 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
   );
 
   const { pathname } = useLocation();
-  const isSelected = !!matchPath({ path: item?.link ? item.link : item.url, end: false }, pathname);
+  const isSelected = !!matchPath({ path: item?.link ? item.link : (item.url ?? ''), end: false }, pathname);
 
   const textColor = 'text.primary';
   const iconSelectedColor = 'primary.main';
@@ -60,11 +68,11 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
       <Box sx={{ position: 'relative' }}>
         <ListItemButton
           component={Link}
-          to={item.url}
+          to={item.url ?? ''}
           target={itemTarget}
           disabled={item.disabled}
           selected={isSelected}
-          sx={(theme) => ({
+          sx={(theme: Theme) => ({
             zIndex: 1201,
             pl: drawerOpen ? `${level * 28}px` : 1.5,
             py: !drawerOpen && level === 1 ? 1.25 : 1,
@@ -84,11 +92,11 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
               '&.Mui-selected': { '&:hover': { bgcolor: 'transparent' }, bgcolor: 'transparent' }
             })
           })}
-          onClick={() => itemHandler()}
+          onClick={itemHandler}
         >
           {itemIcon && (
             <ListItemIcon
-              sx={(theme) => ({
+              sx={(theme: Theme) => ({
                 minWidth: 28,
                 color: isSelected ? iconSelectedColor : textColor,
                 ...(!drawerOpen && {
@@ -130,9 +138,8 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
           )}
         </ListItemButton>
         {(drawerOpen || (!drawerOpen && level !== 1)) &&
-          item?.actions &&
-          item?.actions.map((action, index) => {
-            const ActionIcon = action.icon;
+          item?.actions?.map((action, index) => {
+            const ActionIcon = action.icon as ElementType;
             const callAction = action?.function;
             return (
               <IconButton
@@ -140,12 +147,12 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
                 {...(action.type === 'function' && {
                   onClick: (event) => {
                     event.stopPropagation();
-                    callAction();
+                    if (callAction) callAction();
                   }
                 })}
                 {...(action.type === 'link' && {
                   component: Link,
-                  to: action.url,
+                  to: action.url ?? '',
                   target: action.target ? '_blank' : '_self'
                 })}
                 color="secondary"
@@ -172,10 +179,3 @@ export default function NavItem({ item, level, isParents = false, setSelectedID 
     </>
   );
 }
-
-NavItem.propTypes = {
-  item: PropTypes.any,
-  level: PropTypes.number,
-  isParents: PropTypes.bool,
-  setSelectedID: PropTypes.oneOfType([PropTypes.func, PropTypes.any])
-};

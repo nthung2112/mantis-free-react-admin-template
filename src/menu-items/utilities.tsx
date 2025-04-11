@@ -7,9 +7,10 @@ import {
   FontSizeOutlined,
   LoadingOutlined
 } from '@ant-design/icons';
+import { NavIcon, NavItemType } from 'types/navigation';
 
 // icons
-const icons = {
+const icons: { [key: string]: NavIcon } = {
   FontSizeOutlined,
   BgColorsOutlined,
   BarcodeOutlined,
@@ -20,7 +21,7 @@ const icons = {
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
-const utilities = {
+const utilities: NavItemType = {
   id: 'utilities',
   title: 'Utilities',
   type: 'group',
