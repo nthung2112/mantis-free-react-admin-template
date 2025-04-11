@@ -5,7 +5,7 @@ import Loader from './Loader';
 
 // ==============================|| LOADABLE - LAZY LOADING ||============================== //
 
-const Loadable = <P extends object>(Component: ComponentType<P>) => {
+function Loadable<P extends object>(Component: ComponentType<P>) {
   const LoadableComponent = (props: P) => {
     return (
       <Suspense fallback={<Loader />}>
@@ -18,6 +18,6 @@ const Loadable = <P extends object>(Component: ComponentType<P>) => {
   LoadableComponent.displayName = `Loadable(${Component.displayName || Component.name || 'Component'})`;
 
   return LoadableComponent;
-};
+}
 
 export default Loadable;

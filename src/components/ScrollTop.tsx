@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 // ==============================|| NAVIGATION - SCROLL TO TOP ||============================== //
 
@@ -6,7 +6,7 @@ interface ScrollTopProps {
   children?: ReactNode;
 }
 
-const ScrollTop: FC<ScrollTopProps> = ({ children }) => {
+function ScrollTop({ children }: ScrollTopProps) {
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -16,6 +16,6 @@ const ScrollTop: FC<ScrollTopProps> = ({ children }) => {
   }, []);
 
   return children || null;
-};
+}
 
 export default ScrollTop;

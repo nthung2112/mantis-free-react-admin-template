@@ -50,8 +50,6 @@ interface SimpleBarScrollProps {
 // ==============================|| SIMPLE SCROLL BAR ||============================== //
 
 export default function SimpleBarScroll({ children, sx, ...other }: SimpleBarScrollProps) {
-  const theme = useTheme();
-
   return (
     <>
       <RootStyle>

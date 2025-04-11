@@ -21,11 +21,9 @@ export default function DrawerContent() {
   };
 
   return (
-    <>
-      <SimpleBar sx={contentSx}>
-        <Navigation />
-        {drawerOpen && <NavCard />}
-      </SimpleBar>
-    </>
+    <SimpleBar sx={contentSx}>
+      <Navigation />
+      {drawerOpen && <NavCard />}
+    </SimpleBar>
   );
 }

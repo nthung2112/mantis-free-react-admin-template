@@ -7,13 +7,14 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Logo from './LogoMain';
 import LogoIcon from './LogoIcon';
 import { APP_DEFAULT_PATH } from 'config';
+import { SxProps, Theme } from '@mui/material';
 
 // types
 interface LogoSectionProps {
   reverse?: boolean;
   isIcon?: boolean;
-  sx?: any; // You might want to use proper MUI types here
-  to?: any; // You might want to use proper react-router types here
+  sx?: SxProps<Theme>; // You might want to use proper MUI types here
+  to?: string; // You might want to use proper react-router types here
 }
 
 // ==============================|| MAIN LOGO ||============================== //
