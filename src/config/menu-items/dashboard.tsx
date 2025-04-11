@@ -18,7 +18,7 @@ const dashboard: NavItemType = {
       id: 'dashboard',
       title: 'Dashboard',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/',
       icon: icons.DashboardOutlined,
       breadcrumbs: false
     }
